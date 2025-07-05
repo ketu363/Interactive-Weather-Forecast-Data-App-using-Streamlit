@@ -3,7 +3,7 @@ import requests
 API_KEY = "747b52f4707b553a60e18bfd4c84e4e7"
 
 
-def get_data(place, forecast_days=None, kind=None):
+def get_data(place, forecast_days=None):
     # This url give the city weather data in json for next 5 days in the in tervel of 3 hr
     url =f"http://api.openweathermap.org/data/2.5/forecast?q={place}&appid={API_KEY}"
     response = requests.get(url)
@@ -13,22 +13,8 @@ def get_data(place, forecast_days=None, kind=None):
     nr_values = 8 * forecast_days
     # getting forcast values from the forcast data
     filtered_data = filtered_data[:nr_values]
-    # Filtering data on basis of kind value
-    if kind == "Temperature":
-        # Filtering the temperature data
-        filtered_data = [dict["main"]["temp"] for dict in filtered_data]
-        return filtered_data
-    if kind == "Sky":
-        # Filtering the sky data
-        filtered_data = [dict["weather"][0]["main"] for dict in filtered_data]
-        return filtered_data
-
-
-
-
-
-    return data
+    return filtered_data
 
 
 if __name__ == "__main__":
-    print(get_data(place="London", forecast_days=3, kind="Temperature" ))
+    print(get_data(place="Tokyo", forecast_days=3))
